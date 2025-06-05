@@ -1,0 +1,2296 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sparrow Air API",
+    "description": "API for Sparrow Air airline management system",
+    "contact": {
+      "name": "Sparrow Air",
+      "email": "info@sparrowair.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/aircraft-types": {
+      "get": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Get all aircraft types",
+        "description": "Returns a list of all aircraft types",
+        "operationId": "getAllAircraftTypes",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Create a new aircraft type",
+        "operationId": "createAircraftType",
+        "requestBody": {
+          "description": "Aircraft type to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AircraftType"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Aircraft type created",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/aircraft-types/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Get aircraft type by ICAO code",
+        "operationId": "getAircraftTypeByIcaoCode",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Aircraft type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Update an existing aircraft type",
+        "operationId": "updateAircraftType",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Aircraft type to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AircraftType"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Aircraft type updated",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Aircraft type not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Delete aircraft type by ICAO code",
+        "operationId": "deleteAircraftType",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Aircraft type deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Aircraft type not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline-fleet": {
+      "get": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Get all aircraft in the fleet",
+        "description": "Returns a list of all aircraft in the fleet",
+        "operationId": "getAllAirlineFleet",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Create a new aircraft in the fleet",
+        "description": "Creates a new aircraft in the fleet",
+        "operationId": "createAirlineFleet",
+        "requestBody": {
+          "description": "Aircraft object to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirlineFleet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Aircraft created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline-fleet/aircraft-type/{aircraftTypeIcao}": {
+      "get": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Get all aircraft of a specific type",
+        "description": "Returns a list of all aircraft of a specific type",
+        "operationId": "getAirlineFleetByAircraftTypeIcao",
+        "parameters": [
+          {
+            "name": "aircraftTypeIcao",
+            "in": "path",
+            "description": "ICAO code of the aircraft type",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline-fleet/airline/{airlineIcao}": {
+      "get": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Get all aircraft for a specific airline",
+        "description": "Returns a list of all aircraft for a specific airline",
+        "operationId": "getAirlineFleetByAirlineIcao",
+        "parameters": [
+          {
+            "name": "airlineIcao",
+            "in": "path",
+            "description": "ICAO code of the airline",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline-fleet/airline/{airlineIcao}/count": {
+      "get": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Get total aircraft count for a specific airline",
+        "description": "Returns the total number of aircraft for a specific airline",
+        "operationId": "getTotalAircraftCount",
+        "parameters": [
+          {
+            "name": "airlineIcao",
+            "in": "path",
+            "description": "ICAO code of the airline",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline-fleet/{id}": {
+      "get": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Get aircraft by ID",
+        "description": "Returns an aircraft by ID",
+        "operationId": "getAirlineFleetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Aircraft ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Update an existing aircraft in the fleet",
+        "description": "Updates an existing aircraft in the fleet",
+        "operationId": "updateAirlineFleet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Aircraft ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated aircraft object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirlineFleet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Aircraft updated successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airline Fleet ✈️"
+        ],
+        "summary": "Delete an aircraft from the fleet",
+        "description": "Deletes an aircraft from the fleet",
+        "operationId": "deleteAirlineFleet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Aircraft ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Aircraft deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlines": {
+      "get": {
+        "tags": [
+          "Airlines 🛩 🧑🏼‍✈️"
+        ],
+        "summary": "Get all airlines",
+        "description": "Returns a list of all airlines",
+        "operationId": "getAllAirlines",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airlines 🛩 🧑🏼‍✈️"
+        ],
+        "summary": "Create a new airline",
+        "description": "Creates a new airline",
+        "operationId": "createAirline",
+        "requestBody": {
+          "description": "Airline object to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Airline"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Airline created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlines/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Airlines 🛩 🧑🏼‍✈️"
+        ],
+        "summary": "Get airline by ICAO code",
+        "description": "Returns an airline by ICAO code",
+        "operationId": "getAirlineByIcaoCode",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airlines 🛩 🧑🏼‍✈️"
+        ],
+        "summary": "Update an existing airline",
+        "description": "Updates an airline by ICAO code",
+        "operationId": "updateAirline",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated airline object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Airline"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Airline updated successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airlines 🛩 🧑🏼‍✈️"
+        ],
+        "summary": "Delete an airline",
+        "description": "Deletes an airline by ICAO code",
+        "operationId": "deleteAirline",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Airline deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airports": {
+      "get": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Get all airports",
+        "description": "Returns a list of all airports ✈️🌍",
+        "operationId": "getAllAirports",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Create a new airport",
+        "operationId": "createAirport",
+        "requestBody": {
+          "description": "Airport to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Airport"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Airport created",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airports/distance": {
+      "get": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Calculate distance between two airports",
+        "description": "Returns the distance in kilometers between two airports identified by their ICAO codes",
+        "operationId": "calculateDistance",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "ICAO code of the departure airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "ICAO code of the arrival airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "One or both airports not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airports/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Get airport by ICAO code",
+        "description": "Returns an airport 🛬 by ICAO code",
+        "operationId": "getAirportByIcaoCode",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airport not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Update an existing airport",
+        "operationId": "updateAirport",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Airport to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Airport"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Airport updated",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airport not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airports 🛬🌎"
+        ],
+        "summary": "Delete airport by ICAO code",
+        "operationId": "deleteAirport",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Airport deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Airport not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings": {
+      "get": {
+        "tags": [
+          "Bookings 🎫💺"
+        ],
+        "summary": "Get all bookings",
+        "description": "Returns a list of all bookings",
+        "operationId": "getAllBookings",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bookings 🎫💺"
+        ],
+        "summary": "Create a new booking",
+        "description": "Creates a new booking",
+        "operationId": "createBooking",
+        "requestBody": {
+          "description": "Booking ID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}": {
+      "get": {
+        "tags": [
+          "Bookings 🎫💺"
+        ],
+        "summary": "Get booking by ID",
+        "description": "Returns a booking by ID",
+        "operationId": "getBookingById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bookings 🎫💺"
+        ],
+        "summary": "Update a booking",
+        "description": "Updates an existing booking",
+        "operationId": "updateBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Booking ID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Booking updated successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bookings 🎫💺"
+        ],
+        "summary": "Delete a booking",
+        "description": "Deletes a booking by ID",
+        "operationId": "deleteBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Booking deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking-segments": {
+      "get": {
+        "tags": [
+          "Booking Segments 🎫💺"
+        ],
+        "summary": "Get all booking segments",
+        "description": "Returns a list of all booking segments",
+        "operationId": "getAllBookingSegments",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Booking Segments 🎫💺"
+        ],
+        "summary": "Create a new booking segment",
+        "description": "Creates a new booking segment",
+        "operationId": "createBookingSegment",
+        "requestBody": {
+          "description": "Booking Segment",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingSegment"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Booking segment created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking-segments/{id}": {
+      "get": {
+        "tags": [
+          "Booking Segments 🎫💺"
+        ],
+        "summary": "Get booking segment by ID",
+        "description": "Returns a booking segment by ID",
+        "operationId": "getBookingSegmentById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking Segment ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights": {
+      "get": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Get all flights",
+        "description": "Returns a list of all flights",
+        "operationId": "getAllFlights",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Create a new flight",
+        "description": "Creates a new flight",
+        "operationId": "createFlight",
+        "requestBody": {
+          "description": "Flight object to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Flight"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Flight created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights/airline/{airlineIcaoCode}": {
+      "get": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Get flights by airline ICAO code",
+        "description": "Returns a list of flights by airline ICAO code",
+        "operationId": "getFlightsByAirlineIcaoCode",
+        "parameters": [
+          {
+            "name": "airlineIcaoCode",
+            "in": "path",
+            "description": "Airline ICAO code",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights/from/airport/{airportCode}": {
+      "get": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Get all flights from a specific airport",
+        "description": "Returns a list of flights departing from the specified airport code",
+        "operationId": "getAllFlightsFromAirportCode",
+        "parameters": [
+          {
+            "name": "airportCode",
+            "in": "path",
+            "description": "Airport ICAO code",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights/to/airport/{airportCode}": {
+      "get": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Get all flights to a specific airport",
+        "description": "Returns a list of flights arriving at the specified airport code",
+        "operationId": "getAllFlightsToAirportCode",
+        "parameters": [
+          {
+            "name": "airportCode",
+            "in": "path",
+            "description": "Airport ICAO code",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights/{id}": {
+      "get": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Get flight by ID",
+        "description": "Returns a flight by ID",
+        "operationId": "getFlightById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Flight ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Update an existing flight",
+        "description": "Updates an existing flight",
+        "operationId": "updateFlight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Flight ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Flight object to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Flight"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Flight updated successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Flights 🛫🛬"
+        ],
+        "summary": "Delete a flight",
+        "description": "Deletes a flight by ID",
+        "operationId": "deleteFlight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Flight ID",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Flight deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights-computing/airport-to-airports": {
+      "get": {
+        "tags": [
+          "Flights Computing ✈️ 🌐"
+        ],
+        "summary": "Get airport to airports flights mapping",
+        "description": "Returns a mapping of departure airports to their destination airports",
+        "operationId": "getAirportToAirportsFlights",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights-computing/airports-to-flights": {
+      "get": {
+        "tags": [
+          "Flights Computing ✈️ 🌐"
+        ],
+        "summary": "Get airports to flights mapping",
+        "description": "Returns a mapping of airports to their flights",
+        "operationId": "getAirportsToFlights",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights-computing/route": {
+      "get": {
+        "tags": [
+          "Flights Computing ✈️ 🌐"
+        ],
+        "summary": "Get route between two airports",
+        "description": "Returns a list of flights that form a route between the specified departure and arrival airports",
+        "operationId": "getRoute",
+        "parameters": [
+          {
+            "name": "departure",
+            "in": "query",
+            "description": "ICAO code of the departure airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "arrival",
+            "in": "query",
+            "description": "ICAO code of the arrival airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flights-computing/route-minimum-cost": {
+      "get": {
+        "tags": [
+          "Flights Computing ✈️ 🌐"
+        ],
+        "summary": "Get minimum cost route between two airports",
+        "description": "Returns a list of flights that form the minimum cost route between the specified departure and arrival airports",
+        "operationId": "getRouteMinimumCost",
+        "parameters": [
+          {
+            "name": "departure",
+            "in": "query",
+            "description": "ICAO code of the departure airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "arrival",
+            "in": "query",
+            "description": "ICAO code of the arrival airport",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hello": {
+      "get": {
+        "tags": [
+          "hello-routes"
+        ],
+        "summary": "Get Hello",
+        "description": "Returns a hello message",
+        "operationId": "getHello",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "text/plain": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passengers": {
+      "get": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Get all passengers",
+        "description": "Returns a list of all passengers",
+        "operationId": "getAllPassengers",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Create a new passenger",
+        "description": "Creates a new passenger",
+        "operationId": "createPassenger",
+        "requestBody": {
+          "description": "Passenger object to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Passenger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Passenger created successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passengers/search": {
+      "get": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Get passengers by first name and last name",
+        "description": "Returns a list of passengers by first name and last name",
+        "operationId": "getPassengersByFirstNameAndLastName",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First name of the passenger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last name of the passenger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passengers/search/dateOfBirth/{dateOfBirth}": {
+      "get": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Get passengers by date of birth",
+        "description": "Returns a list of passengers by date of birth",
+        "operationId": "getPassengersByDateOfBirth",
+        "parameters": [
+          {
+            "name": "dateOfBirth",
+            "in": "path",
+            "description": "Date of birth of the passenger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passengers/{id}": {
+      "get": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Get passenger by ID",
+        "description": "Returns a passenger by ID",
+        "operationId": "getPassengerById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the passenger",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Passenger not found",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Update an existing passenger",
+        "description": "Updates an existing passenger",
+        "operationId": "updatePassenger",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the passenger to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Passenger object to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Passenger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Passenger updated successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Passenger not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Passengers 👨‍💼"
+        ],
+        "summary": "Delete a passenger",
+        "description": "Deletes a passenger by ID",
+        "operationId": "deletePassenger",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the passenger to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Passenger deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Passenger not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seats": {
+      "get": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Get all seats",
+        "description": "Returns a list of all seats",
+        "operationId": "getAllSeats",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seats/airline/{airlineIcao}/flightNumber/{flightNumber}": {
+      "get": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Get seats by airline ICAO and flight number",
+        "description": "Returns a list of seats by airline ICAO and flight number",
+        "operationId": "getSeatsByAirlineIcaoAndFlightNumber",
+        "parameters": [
+          {
+            "name": "airlineIcao",
+            "in": "path",
+            "description": "ICAO code of the airline",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "flightNumber",
+            "in": "path",
+            "description": "Flight number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seats/flightNumber/{flightNumber}": {
+      "get": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Get seats by flight number",
+        "description": "Returns a list of seats by flight number",
+        "operationId": "getSeatsByFlightNumber",
+        "parameters": [
+          {
+            "name": "flightNumber",
+            "in": "path",
+            "description": "Flight number to fetch seats for",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seats/flights/{flightId}": {
+      "get": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Get seats by flight ID",
+        "description": "Returns a list of seats by flight ID",
+        "operationId": "getSeatsByFlightId",
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "path",
+            "description": "ID of the flight to fetch seats for",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/seats/{seatId}": {
+      "get": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Get seat by ID",
+        "description": "Returns a seat by ID",
+        "operationId": "getSeatById",
+        "parameters": [
+          {
+            "name": "seatId",
+            "in": "path",
+            "description": "ID of the seat to be fetched",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Seats 💺"
+        ],
+        "summary": "Update status seat by ID",
+        "description": "Updates a seat by ID",
+        "operationId": "updateSeat",
+        "parameters": [
+          {
+            "name": "seatId",
+            "in": "path",
+            "description": "ID of the seat to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Seat object to be updated",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Seat"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AircraftType": {
+        "type": "object",
+        "properties": {
+          "icaoCode": {
+            "type": "string"
+          },
+          "modelName": {
+            "type": "string"
+          },
+          "manufacturer": {
+            "type": "string"
+          },
+          "seatingCapacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxRangeKm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mtow": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ServerResponse": {
+
+      },
+      "AirlineFleet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "aircraftTypeIcao": {
+            "type": "string"
+          },
+          "airlineIcao": {
+            "type": "string"
+          },
+          "registrationNumber": {
+            "type": "string"
+          },
+          "aircraftAge": {
+            "type": "string",
+            "format": "date"
+          },
+          "seatConfiguration": {
+            "type": "string"
+          },
+          "hasWifi": {
+            "type": "boolean"
+          },
+          "hasPowerOutlets": {
+            "type": "boolean"
+          },
+          "hasEntertainmentSystem": {
+            "type": "boolean"
+          },
+          "firstClassSeats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "businessSeats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "premiumEconomySeats": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "economySeats": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Airline": {
+        "type": "object",
+        "properties": {
+          "icaoCode": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "headquarters": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "website": {
+            "type": "string"
+          }
+        }
+      },
+      "Airport": {
+        "type": "object",
+        "properties": {
+          "icaoCode": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bookingReference": {
+            "type": "string"
+          },
+          "passengerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "BookingSegment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "bookingId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "flightId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "seatId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "fareClass": {
+            "type": "string"
+          },
+          "ticketNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "Flight": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "airlineIcaoCode": {
+            "type": "string"
+          },
+          "flightNumber": {
+            "type": "string"
+          },
+          "departureAirportIcao": {
+            "type": "string"
+          },
+          "arrivalAirportIcao": {
+            "type": "string"
+          },
+          "scheduledDeparture": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scheduledArrival": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "airlineFleetId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "Passenger": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "passportNumber": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "nationality": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "Seat": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "flightId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "seatNumber": {
+            "type": "string"
+          },
+          "seatClass": {
+            "type": "string",
+            "enum": [
+              "ECONOMY",
+              "PREMIUM_ECONOMY",
+              "BUSINESS",
+              "FIRST_CLASS"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "BOOKED",
+              "RESERVED"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
