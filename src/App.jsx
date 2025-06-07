@@ -45,8 +45,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/aircraft-types" element={<AircraftTypes />} />
-            <Route path="/aircraft-types/:icaoCode" element={<AircraftTypeDetail />} />
+            <Route path="/aircraft" element={<AircraftTypes />} />
+            <Route path="/aircraft/:icaoCode" element={<AircraftTypeDetail />} />
           </Routes>
         </main>
         <footer className="footer">

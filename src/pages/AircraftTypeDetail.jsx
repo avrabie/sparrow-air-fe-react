@@ -6,7 +6,6 @@ import {
   faArrowLeft, 
   faSpinner, 
   faIndustry, 
-  faUsers, 
   faRulerHorizontal, 
   faWeightHanging,
   faImage
@@ -57,9 +56,9 @@ function AircraftTypeDetail() {
       <div className="aircraft-detail-container">
         <div className="error-container">
           <p className="error-message">{error}</p>
-          <Link to="/aircraft-types" className="back-button">
+          <Link to="/aircraft" className="back-button">
             <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} />
-            Back to Aircraft Types
+            Back to Aircraft
           </Link>
         </div>
       </div>
@@ -70,11 +69,11 @@ function AircraftTypeDetail() {
     return (
       <div className="aircraft-detail-container">
         <div className="not-found-container">
-          <h2>Aircraft Type Not Found</h2>
-          <p>The aircraft type with ICAO code {icaoCode} could not be found.</p>
-          <Link to="/aircraft-types" className="back-button">
+          <h2>Aircraft Not Found</h2>
+          <p>The aircraft with ICAO code {icaoCode} could not be found.</p>
+          <Link to="/aircraft" className="back-button">
             <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} />
-            Back to Aircraft Types
+            Back to Aircraft
           </Link>
         </div>
       </div>
@@ -84,13 +83,13 @@ function AircraftTypeDetail() {
   return (
     <div className="aircraft-detail-container">
       <div className="detail-header">
-        <Link to="/aircraft-types" className="back-link">
+        <Link to="/aircraft" className="back-link">
           <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} />
-          Back to Aircraft Types
+          Back to Aircraft
         </Link>
         <h1>
           <FontAwesomeIcon icon={faPlane} style={{ marginRight: '0.5rem' }} />
-          {aircraftType.modelName}
+          {aircraftType.name}
         </h1>
       </div>
 
@@ -107,7 +106,7 @@ function AircraftTypeDetail() {
               )}
               <img 
                 src={`https://skybrary.aero/sites/default/files/${aircraftType.icaoCode}.jpg`} 
-                alt={`${aircraftType.modelName} aircraft`} 
+                alt={`${aircraftType.name} aircraft`} 
                 style={{ 
                   position: 'absolute',
                   top: '0',
@@ -149,26 +148,227 @@ function AircraftTypeDetail() {
               </div>
 
               <div className="detail-item">
-                <FontAwesomeIcon icon={faUsers} className="detail-icon" />
                 <div className="detail-text">
-                  <h3>Seating Capacity</h3>
-                  <p>{aircraftType.seatingCapacity} passengers</p>
+                  <h3>Type Code</h3>
+                  <p>{aircraftType.typeCode}</p>
                 </div>
               </div>
 
               <div className="detail-item">
-                <FontAwesomeIcon icon={faRulerHorizontal} className="detail-icon" />
                 <div className="detail-text">
-                  <h3>Maximum Range</h3>
-                  <p>{aircraftType.maxRangeKm} km</p>
+                  <h3>Body Type</h3>
+                  <p>{aircraftType.bodyType}</p>
                 </div>
               </div>
 
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Wing Type</h3>
+                  <p>{aircraftType.wingType}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Wing Position</h3>
+                  <p>{aircraftType.wingPosition}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Tail Type</h3>
+                  <p>{aircraftType.tailType}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Weight Category</h3>
+                  <p>{aircraftType.weightCategory}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Performance Category</h3>
+                  <p>{aircraftType.aircraftPerformanceCategory}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-section">
+            <h2>Dimensions</h2>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <FontAwesomeIcon icon={faRulerHorizontal} className="detail-icon" />
+                <div className="detail-text">
+                  <h3>Wingspan</h3>
+                  <p>{aircraftType.wingspanMeters} meters</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Length</h3>
+                  <p>{aircraftType.lengthMeters} meters</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Height</h3>
+                  <p>{aircraftType.heightMeters} meters</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-section">
+            <h2>Engine Information</h2>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Engine Type</h3>
+                  <p>{aircraftType.engineType}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Engine Count</h3>
+                  <p>{aircraftType.engineCount}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Engine Position</h3>
+                  <p>{aircraftType.enginePosition}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Powerplant</h3>
+                  <p>{aircraftType.powerplant}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Engine Models</h3>
+                  <p>{aircraftType.engineModels ? aircraftType.engineModels.join(', ') : 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-section">
+            <h2>Performance</h2>
+            <div className="detail-grid">
               <div className="detail-item">
                 <FontAwesomeIcon icon={faWeightHanging} className="detail-icon" />
                 <div className="detail-text">
                   <h3>Maximum Take-Off Weight</h3>
-                  <p>{aircraftType.mtow} kg</p>
+                  <p>{aircraftType.maxTakeOffWeightKg} kg</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Maximum Landing Weight</h3>
+                  <p>{aircraftType.maxLandingWeightKg} kg</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Take-Off Speed (V2)</h3>
+                  <p>{aircraftType.takeOffV2Kts} kts</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Take-Off Distance</h3>
+                  <p>{aircraftType.takeOffDistanceMeters} meters</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Initial Climb Speed</h3>
+                  <p>{aircraftType.initialClimbIasKts} kts</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Initial Climb Rate</h3>
+                  <p>{aircraftType.initialClimbRocFtMin} ft/min</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Climb to FL150 Speed</h3>
+                  <p>{aircraftType.climbToFL150IasKts} kts</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Climb to FL150 Rate</h3>
+                  <p>{aircraftType.climbToFL150RocFtMin} ft/min</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Cruise Speed</h3>
+                  <p>{aircraftType.cruiseIasKts} kts</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Cruise Mach</h3>
+                  <p>{aircraftType.cruiseMach}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Cruise Altitude</h3>
+                  <p>{aircraftType.cruiseAltitudeFt} ft</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="detail-section">
+            <h2>Other Information</h2>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Aerodrome Reference Code</h3>
+                  <p>{aircraftType.aerodromeReferenceCode}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>RFF Category</h3>
+                  <p>{aircraftType.rffCategory}</p>
+                </div>
+              </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Landing Gear Type</h3>
+                  <p>{aircraftType.landingGearType}</p>
                 </div>
               </div>
             </div>

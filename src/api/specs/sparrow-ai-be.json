@@ -20,21 +20,212 @@
     }
   ],
   "paths": {
+    "/aircraft": {
+      "get": {
+        "tags": [
+          "Aircraft ✈️"
+        ],
+        "summary": "Get all aircraft",
+        "description": "Returns a list of all aircraft ✈️",
+        "operationId": "getAllAircraft",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Aircraft ✈️"
+        ],
+        "summary": "Create a new aircraft",
+        "operationId": "createAircraft",
+        "requestBody": {
+          "description": "Aircraft to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Aircraft"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Aircraft created",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/aircraft/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Aircraft ✈️"
+        ],
+        "summary": "Get aircraft by ICAO code",
+        "description": "Returns an aircraft ✈️ by ICAO code",
+        "operationId": "getAircraftByIcaoCode",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Aircraft not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Aircraft ✈️"
+        ],
+        "summary": "Update an existing aircraft",
+        "operationId": "updateAircraft",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Aircraft to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Aircraft"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Aircraft updated",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Aircraft not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Aircraft ✈️"
+        ],
+        "summary": "Delete aircraft by ICAO code",
+        "operationId": "deleteAircraft",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Aircraft deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Aircraft not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/aircraft-types": {
       "get": {
         "tags": [
           "Aircraft Types 🛩 "
         ],
         "summary": "Get all aircraft types",
-        "description": "Returns a list of all aircraft types",
+        "description": "Returns a list of all aircraft types, optionally filtered by model name",
         "operationId": "getAllAircraftTypes",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search query to filter aircraft types by model name",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -60,8 +251,47 @@
           "201": {
             "description": "Aircraft type created",
             "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/aircraft-types/online/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Aircraft Types 🛩 "
+        ],
+        "summary": "Parse online aircraft from Skybrary",
+        "operationId": "parseOnlineAircraft",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "500": {
+            "description": "Error parsing online aircraft",
+            "content": {
               "application/json": {
-
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
               }
             }
           }
@@ -93,9 +323,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
@@ -145,9 +373,7 @@
           "200": {
             "description": "Aircraft type updated",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
@@ -218,9 +444,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -246,9 +470,7 @@
           "201": {
             "description": "Aircraft created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -281,9 +503,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -316,9 +536,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -351,9 +569,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -386,9 +602,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -429,9 +643,7 @@
           "200": {
             "description": "Aircraft updated successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -484,9 +696,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -512,9 +722,7 @@
           "201": {
             "description": "Airline created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -546,9 +754,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -588,9 +794,7 @@
           "200": {
             "description": "Airline updated successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -642,9 +846,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -670,9 +872,7 @@
           "201": {
             "description": "Airport created",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -718,9 +918,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "400": {
@@ -772,9 +970,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
@@ -824,9 +1020,7 @@
           "200": {
             "description": "Airport updated",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
@@ -897,9 +1091,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -926,9 +1118,7 @@
           "201": {
             "description": "Booking created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -961,9 +1151,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1005,9 +1193,7 @@
           "200": {
             "description": "Booking updated successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1060,9 +1246,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1089,9 +1273,7 @@
           "201": {
             "description": "Booking segment created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1120,9 +1302,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1140,9 +1320,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1168,9 +1346,7 @@
           "201": {
             "description": "Flight created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1203,9 +1379,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1238,9 +1412,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1273,9 +1445,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1308,9 +1478,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1351,9 +1519,7 @@
           "200": {
             "description": "Flight updated successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1406,9 +1572,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1426,9 +1590,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1474,9 +1636,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "400": {
@@ -1532,9 +1692,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "400": {
@@ -1562,9 +1720,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "text/plain": {
-
-              }
+              "text/plain": {}
             }
           }
         }
@@ -1582,9 +1738,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1610,9 +1764,7 @@
           "201": {
             "description": "Passenger created successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1650,9 +1802,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1681,9 +1831,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1712,17 +1860,13 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
             "description": "Passenger not found",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1759,9 +1903,7 @@
           "200": {
             "description": "Passenger updated successfully",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           },
           "404": {
@@ -1830,9 +1972,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1870,9 +2010,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1901,9 +2039,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1932,9 +2068,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -1963,9 +2097,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -2003,9 +2135,7 @@
           "200": {
             "description": "Successful operation",
             "content": {
-              "application/json": {
-
-              }
+              "application/json": {}
             }
           }
         }
@@ -2014,6 +2144,141 @@
   },
   "components": {
     "schemas": {
+      "Aircraft": {
+        "type": "object",
+        "properties": {
+          "icaoCode": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "manufacturer": {
+            "type": "string"
+          },
+          "bodyType": {
+            "type": "string"
+          },
+          "wingType": {
+            "type": "string"
+          },
+          "wingPosition": {
+            "type": "string"
+          },
+          "tailType": {
+            "type": "string"
+          },
+          "weightCategory": {
+            "type": "string"
+          },
+          "aircraftPerformanceCategory": {
+            "type": "string"
+          },
+          "typeCode": {
+            "type": "string"
+          },
+          "aerodromeReferenceCode": {
+            "type": "string"
+          },
+          "rffCategory": {
+            "type": "string"
+          },
+          "engineType": {
+            "type": "string"
+          },
+          "engineCount": {
+            "type": "string"
+          },
+          "enginePosition": {
+            "type": "string"
+          },
+          "landingGearType": {
+            "type": "string"
+          },
+          "wingspanMeters": {
+            "type": "number",
+            "format": "double"
+          },
+          "lengthMeters": {
+            "type": "number",
+            "format": "double"
+          },
+          "heightMeters": {
+            "type": "number",
+            "format": "double"
+          },
+          "powerplant": {
+            "type": "string"
+          },
+          "engineModels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "takeOffV2Kts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "takeOffDistanceMeters": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxTakeOffWeightKg": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "initialClimbIasKts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "initialClimbRocFtMin": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "climbToFL150IasKts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "climbToFL150RocFtMin": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cruiseIasKts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cruiseMach": {
+            "type": "number",
+            "format": "double"
+          },
+          "cruiseAltitudeFt": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serviceCeilingFt": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rangeNm": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "approachVrefKts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "landingDistanceMeters": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxLandingWeightKg": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ServerResponse": {},
       "AircraftType": {
         "type": "object",
         "properties": {
@@ -2039,9 +2304,6 @@
             "format": "int32"
           }
         }
-      },
-      "ServerResponse": {
-
       },
       "AirlineFleet": {
         "type": "object",

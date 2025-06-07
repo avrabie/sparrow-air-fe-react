@@ -25,7 +25,7 @@ function AircraftTypes() {
       const data = await getAllAircraftTypes();
       setAllAircraftTypes(data);
     } catch (err) {
-      setError('Failed to fetch aircraft types. Please try again later.');
+      setError('Failed to fetch aircraft. Please try again later.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -40,9 +40,10 @@ function AircraftTypes() {
 
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     return allAircraftTypes.filter(aircraft => 
-      aircraft.modelName.toLowerCase().includes(lowerCaseSearchTerm) ||
-      aircraft.manufacturer.toLowerCase().includes(lowerCaseSearchTerm) ||
-      aircraft.icaoCode.toLowerCase().includes(lowerCaseSearchTerm)
+      (aircraft.name && aircraft.name.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (aircraft.manufacturer && aircraft.manufacturer.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (aircraft.icaoCode && aircraft.icaoCode.toLowerCase().includes(lowerCaseSearchTerm)) ||
+      (aircraft.engineType && aircraft.engineType.toLowerCase().includes(lowerCaseSearchTerm))
     );
   }, [allAircraftTypes, searchTerm]);
 
@@ -78,9 +79,9 @@ function AircraftTypes() {
       <div className="page-header">
         <h1>
           {/*<FontAwesomeIcon icon={faPlane} style={{ marginRight: '0.5rem' }} />*/}
-          Aircraft Types
+          Aircraft
         </h1>
-        <p>Browse and search for different aircraft types in our database</p>
+        <p>Browse and search for different aircraft in our database</p>
       </div>
 
       <div className="search-section" style={{ padding: '2rem 0', backgroundColor: '#f0f7ff', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
@@ -88,7 +89,7 @@ function AircraftTypes() {
           <div className="search-input-container" style={{ position: 'relative', width: '100%', maxWidth: '800px', boxShadow: '0 6px 18px rgba(0, 86, 179, 0.2)', borderRadius: '12px' }}>
             <input
               type="text"
-              placeholder="Search aircraft types..."
+              placeholder="Search aircraft..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="search-input"
@@ -105,7 +106,7 @@ function AircraftTypes() {
         {loading ? (
           <div className="loading-container">
             <FontAwesomeIcon icon={faSpinner} spin size="2x" />
-            <p>Loading aircraft types...</p>
+            <p>Loading aircraft...</p>
           </div>
         ) : error ? (
           <div className="error-container">
@@ -116,13 +117,13 @@ function AircraftTypes() {
           </div>
         ) : aircraftTypes.length === 0 ? (
           <div className="no-results">
-            <p>No aircraft types found. Try a different search term.</p>
+            <p>No aircraft found. Try a different search term.</p>
           </div>
         ) : (
           <div className="aircraft-types-grid">
             {aircraftTypes.map((aircraft) => (
               <Link
-                to={`/aircraft-types/${aircraft.icaoCode}`}
+                to={`/aircraft/${aircraft.icaoCode}`}
                 key={aircraft.icaoCode}
                 className="aircraft-card"
               >
@@ -134,7 +135,7 @@ function AircraftTypes() {
                   )}
                   <img 
                     src={`https://skybrary.aero/sites/default/files/${aircraft.icaoCode}.jpg`} 
-                    alt={`${aircraft.modelName} aircraft`}
+                    alt={`${aircraft.name} aircraft`}
                     style={{ 
                       width: '100%', 
                       height: '100%', 
@@ -146,12 +147,12 @@ function AircraftTypes() {
                   />
                 </div>
                 <div className="aircraft-info">
-                  <h3>{aircraft.modelName}</h3>
+                  <h3>{aircraft.name}</h3>
                   <p className="manufacturer">{aircraft.manufacturer}</p>
                   <div className="aircraft-details">
                     <span>ICAO: {aircraft.icaoCode}</span>
-                    <span>Capacity: {aircraft.seatingCapacity}</span>
-                    <span>Range: {aircraft.maxRangeKm} km</span>
+                    <span>Engine: {aircraft.engineType}</span>
+                    <span>Engine Count: {aircraft.engineCount}</span>
                   </div>
                 </div>
               </Link>

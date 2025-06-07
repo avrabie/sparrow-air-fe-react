@@ -24,9 +24,9 @@ function Navbar({ darkMode, toggleDarkMode }) {
           <FontAwesomeIcon icon={faEnvelope} />
           <span>Contact</span>
         </Link>
-        <Link to="/aircraft-types" className="navbar-item">
+        <Link to="/aircraft" className="navbar-item">
           <FontAwesomeIcon icon={faPlaneDeparture} />
-          <span>Aircraft Types</span>
+          <span>Aircraft</span>
         </Link>
         <button 
           className="theme-toggle-button" 
