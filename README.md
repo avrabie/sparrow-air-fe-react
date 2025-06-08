@@ -48,11 +48,26 @@ The following operations have been integrated with the backend:
 - Serving 500+ Airlines Worldwide
 - 24/7 Customer Support
 
+## Environment Profiles
+The application supports different environment profiles for connecting to different backend servers:
+
+- **Development**: Uses `http://localhost:8080` as the backend API URL
+- **Production**: Uses `http://192.168.0.47:8080` as the backend API URL
+
+You can customize these URLs by modifying the `.env` and `.env.production` files in the project root.
+
 ## Getting Started
 1. Clone the repository
 2. Install dependencies with `npm install`
-3. Start the development server with `npm run dev`
-4. Access the application at `http://localhost:5173`
+3. Start the development server:
+   - For local development: `npm run dev` (uses localhost:8080 as backend)
+   - For production environment: `npm run dev:prod` (uses 192.168.0.47:8080 as backend)
+4. Access the application at `http://localhost:5173` on the local machine
+5. To access from other computers on the same network:
+   - Find your computer's IP address (e.g., using `ipconfig` on Windows or `ifconfig` on Mac/Linux)
+   - Other computers can access the application at `http://<your-ip-address>:5173`
+   - Make sure your firewall allows connections to port 5173
+   - When accessing from another computer, use `npm run dev:prod` to ensure the backend URL is correctly set
 
 ## Technologies Used
 - React
