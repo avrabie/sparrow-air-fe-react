@@ -21,6 +21,50 @@ const apiFetch = async (url, options = {}) => {
 };
 
 /**
+ * Fetches a list of countries that have airports
+ * @returns {Promise<Array<string>>} - Promise resolving to an array of country names
+ */
+export const getCountries = async () => {
+  try {
+    const response = await apiFetch(`${API_URL}/gds/countries`);
+
+    if (!response.ok) {
+      throw new Error(`Error fetching countries: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch countries:', error);
+    // Fallback to empty array if API call fails
+    return [];
+  }
+};
+
+/**
+ * Fetches airports by country from the API with pagination support
+ * @param {string} country - The country to filter airports by
+ * @param {number} page - Page number (zero-based)
+ * @param {number} size - Number of items per page
+ * @returns {Promise<Object>} - Promise resolving to paginated airports data
+ */
+export const getAirportsByCountry = async (country, page = 0, size = 20) => {
+  try {
+    const url = `${API_URL}/airportsnew/country/${encodeURIComponent(country)}?page=${page}&size=${size}`;
+
+    const response = await apiFetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Error fetching airports by country: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch airports for country ${country}:`, error);
+    throw error;
+  }
+};
+
+/**
  * Fetches airports from the API with pagination support
  * @param {number} page - Page number (zero-based)
  * @param {number} size - Number of items per page

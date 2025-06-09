@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlaneArrival, faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { getAirports } from '../api/services/airportService';
+import { faPlaneArrival, faSearch, faSpinner, faSliders, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { getAirports, getCountries, getAirportsByCountry } from '../api/services/airportService';
 import '../styles/Airports.css'; // Using a dedicated CSS file for Airports
 
 function Airports() {
@@ -16,6 +16,12 @@ function Airports() {
   const [totalElements, setTotalElements] = useState(0);
   const [visibleCount, setVisibleCount] = useState(20);
   const searchTimeoutRef = useRef(null);
+
+  // Country filter state
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [loadingCountries, setLoadingCountries] = useState(false);
 
   const observer = useRef();
   const lastAirportElementRef = useCallback(node => {
@@ -32,17 +38,32 @@ function Airports() {
   // Fetch airports on component mount
   useEffect(() => {
     fetchAirports();
+    fetchCountries();
   }, []);
 
-  // Fetch airports when search term changes (with debounce)
+  // Fetch countries for the filter
+  const fetchCountries = async () => {
+    try {
+      setLoadingCountries(true);
+      const countriesList = await getCountries();
+      setCountries(countriesList);
+    } catch (err) {
+      console.error('Failed to fetch countries:', err);
+    } finally {
+      setLoadingCountries(false);
+    }
+  };
+
+  // Fetch airports when search term or selected country changes (with debounce)
   useEffect(() => {
     // Clear any existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
 
-    // Don't search if the term is empty
-    if (!searchTerm.trim()) {
+    // If a country is selected, we'll use that for filtering
+    // If search term is empty and no country is selected, fetch all airports
+    if (!searchTerm.trim() && !selectedCountry) {
       if (airports.length === 0) {
         fetchAirports();
       }
@@ -61,7 +82,7 @@ function Airports() {
         clearTimeout(searchTimeoutRef.current);
       }
     };
-  }, [searchTerm]);
+  }, [searchTerm, selectedCountry]);
 
   // Fetch airports from the backend
   const fetchAirports = async (page = 0, size = 100, search = '') => {
@@ -71,7 +92,14 @@ function Airports() {
       }
       setError(null);
 
-      const data = await getAirports(page, size, search);
+      let data;
+
+      // If a country is selected, use the country-specific endpoint
+      if (selectedCountry) {
+        data = await getAirportsByCountry(selectedCountry, page, size);
+      } else {
+        data = await getAirports(page, size, search);
+      }
 
       // Assuming the API returns a paginated response with content, totalElements, etc.
       if (data.content) {
@@ -120,6 +148,15 @@ function Airports() {
     setSearchTerm(e.target.value);
   };
 
+  // Handle country selection change
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
+    // Reset search term when changing country
+    setSearchTerm('');
+    // Fetch airports for the selected country
+    fetchAirports(0, 100, '');
+  };
+
   return (
     <div className="aircraft-types-container">
       <h1 className="page-title">
@@ -128,7 +165,7 @@ function Airports() {
       </h1>
 
       <div className="search-container">
-        <div className="search-input-container">
+        <div className="search-input-container" style={{ display: 'flex' }}>
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
           <input
             type="text"
@@ -136,8 +173,106 @@ function Airports() {
             value={searchTerm}
             onChange={handleSearchChange}
             className="search-input"
+            style={{ flexGrow: 1 }}
           />
+          <button 
+            onClick={() => fetchAirports(0, 100, searchTerm)}
+            className="search-button"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              padding: '0.5rem 1rem', 
+              backgroundColor: '#0056b3', 
+              color: 'white', 
+              border: '1px solid #0056b3', 
+              borderRadius: '0 4px 4px 0', 
+              cursor: 'pointer',
+              marginLeft: '-1px'
+            }}
+          >
+            <FontAwesomeIcon icon={faSearch} style={{ marginRight: '0.5rem' }} />
+            Search
+          </button>
         </div>
+
+        <div style={{ marginTop: '1rem' }}>
+          <button 
+            onClick={() => setShowFilters(!showFilters)} 
+            className="filter-toggle-button"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              padding: '0.5rem 1rem', 
+              backgroundColor: showFilters ? '#0056b3' : '#f8f9fa', 
+              color: showFilters ? 'white' : '#0056b3', 
+              border: '1px solid #0056b3', 
+              borderRadius: '4px', 
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <FontAwesomeIcon icon={faSliders} style={{ marginRight: '0.5rem' }} />
+            {showFilters ? 'Hide Filters' : 'Show Filters'}
+          </button>
+        </div>
+
+        {showFilters && (
+          <div className="filter-section" style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', width: '100%', maxWidth: '800px', margin: '0 auto' }}>
+            <h3 style={{ marginBottom: '1rem', color: '#0056b3', textAlign: 'center' }}>Filter Airports</h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+              <div style={{ width: '100%', maxWidth: '400px' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
+                  <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '0.5rem' }} />
+                  Filter by Country:
+                </label>
+                <select 
+                  value={selectedCountry} 
+                  onChange={handleCountryChange}
+                  style={{ 
+                    width: '100%', 
+                    padding: '0.5rem', 
+                    borderRadius: '4px', 
+                    border: '1px solid #ccc',
+                    fontSize: '1rem'
+                  }}
+                >
+                  <option value="">All Countries</option>
+                  {countries.map(country => (
+                    <option key={country.code} value={country.name}>{country.name}</option>
+                  ))}
+                </select>
+
+                {loadingCountries && (
+                  <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem', color: '#666' }}>
+                    <FontAwesomeIcon icon={faSpinner} spin style={{ marginRight: '0.5rem' }} />
+                    Loading countries...
+                  </div>
+                )}
+              </div>
+
+              {selectedCountry && (
+                <button 
+                  onClick={() => {
+                    setSelectedCountry('');
+                    fetchAirports(0, 100, searchTerm);
+                  }}
+                  style={{ 
+                    padding: '0.5rem 1rem', 
+                    backgroundColor: '#f8f9fa', 
+                    color: '#0056b3', 
+                    border: '1px solid #0056b3', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Clear Country Filter
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {error && <div className="error-message">{error}</div>}
