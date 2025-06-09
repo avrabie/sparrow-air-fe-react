@@ -1,0 +1,180 @@
+/* Airport Details Page Styles */
+.airport-detail-container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.detail-header {
+  margin-bottom: 2rem;
+}
+
+.back-link, .back-button {
+  display: inline-flex;
+  align-items: center;
+  color: #0056b3;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.back-link:hover, .back-button:hover {
+  text-decoration: underline;
+}
+
+.detail-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #0056b3;
+  display: flex;
+  align-items: center;
+}
+
+.airport-detail-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.airport-image {
+  width: 100%;
+  padding: 1rem;
+}
+
+.airport-detail-info {
+  padding: 2rem;
+}
+
+.detail-section {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 2rem;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.detail-section h2 {
+  color: #0056b3;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.detail-icon {
+  color: #0056b3;
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.detail-text h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.detail-text p {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.map-link:hover {
+  text-decoration: underline;
+}
+
+.loading-container, .error-container, .not-found-container {
+  text-align: center;
+  padding: 3rem;
+}
+
+.loading-container svg {
+  color: #0056b3;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #d9534f;
+  margin-bottom: 1rem;
+}
+
+.not-found-container h2 {
+  color: #d9534f;
+  margin-bottom: 1rem;
+}
+
+/* Dark mode styles */
+.dark-mode .airport-detail-container {
+  color: #f0f0f0;
+}
+
+.dark-mode .back-link, .dark-mode .back-button {
+  color: #4d94ff;
+}
+
+.dark-mode .detail-header h1 {
+  color: #4d94ff;
+}
+
+.dark-mode .airport-detail-card {
+  background-color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .detail-section {
+  border-bottom-color: #444;
+}
+
+.dark-mode .detail-section h2 {
+  color: #4d94ff;
+}
+
+.dark-mode .detail-icon {
+  color: #4d94ff;
+}
+
+.dark-mode .detail-text h3 {
+  color: #ccc;
+}
+
+.dark-mode .detail-text p {
+  color: #f0f0f0;
+}
+
+.dark-mode .map-link {
+  color: #4d94ff;
+}
+
+.dark-mode .loading-container svg {
+  color: #4d94ff;
+}
+
+.dark-mode .error-message {
+  color: #ff6b6b;
+}
+
+.dark-mode .not-found-container h2 {
+  color: #ff6b6b;
+}
