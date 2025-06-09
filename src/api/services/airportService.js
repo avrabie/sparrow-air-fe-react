@@ -131,3 +131,24 @@ export const getAirportByIcaoCode = async (icaoCode) => {
     throw error;
   }
 };
+
+/**
+ * Calculates the distance between two airports
+ * @param {string} fromIcaoCode - The ICAO code of the departure airport
+ * @param {string} toIcaoCode - The ICAO code of the destination airport
+ * @returns {Promise<Object>} - Promise resolving to the distance information
+ */
+export const getAirportsDistance = async (fromIcaoCode, toIcaoCode) => {
+  try {
+    const response = await apiFetch(`${API_URL}/airports/distance?from=${fromIcaoCode}&to=${toIcaoCode}`);
+
+    if (!response.ok) {
+      throw new Error(`Error calculating distance: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to calculate distance between airports ${fromIcaoCode} and ${toIcaoCode}:`, error);
+    throw error;
+  }
+};

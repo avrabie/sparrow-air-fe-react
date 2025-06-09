@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobe, faSpinner, faPlaneDeparture, faPlaneArrival, faPlane } from '@fortawesome/free-solid-svg-icons';
-import { getAirports, getAirportByIcaoCode } from '../api/services/airportService';
+import { faGlobe, faSpinner, faPlaneDeparture, faPlaneArrival, faPlane, faRuler } from '@fortawesome/free-solid-svg-icons';
+import { getAirports, getAirportByIcaoCode, getAirportsDistance } from '../api/services/airportService';
 import GlobeGL from 'react-globe.gl';
 import * as THREE from 'three';
 import '../styles/Globe.css';
@@ -16,6 +16,8 @@ function Globe() {
   const [arcData, setArcData] = useState([]);
   const [planePosition, setPlanePosition] = useState(null);
   const [animating, setAnimating] = useState(false);
+  const [distanceInfo, setDistanceInfo] = useState(null);
+  const [distanceLoading, setDistanceLoading] = useState(false);
   const globeRef = useRef();
   const animationRef = useRef();
 
@@ -48,6 +50,32 @@ function Globe() {
       }
     };
   }, []);
+
+  // Fetch distance information when both departure and destination airports are selected
+  useEffect(() => {
+    const fetchDistanceInfo = async () => {
+      // Only fetch if both airports are selected and they are different
+      if (departureAirport && destinationAirport && departureAirport !== destinationAirport) {
+        try {
+          setDistanceLoading(true);
+          setDistanceInfo(null);
+
+          const data = await getAirportsDistance(departureAirport, destinationAirport);
+          setDistanceInfo(data);
+        } catch (error) {
+          console.error('Failed to fetch distance information:', error);
+          setDistanceInfo(null);
+        } finally {
+          setDistanceLoading(false);
+        }
+      } else {
+        // Clear distance info if one or both airports are not selected
+        setDistanceInfo(null);
+      }
+    };
+
+    fetchDistanceInfo();
+  }, [departureAirport, destinationAirport]);
 
   const fetchAirports = async () => {
     try {
@@ -221,6 +249,37 @@ function Globe() {
             </button>
           </div>
         </div>
+
+        {/* Distance information */}
+        {departureAirport && destinationAirport && departureAirport !== destinationAirport && (
+          <div className="distance-info mt-2 mb-3">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">
+                  <FontAwesomeIcon icon={faRuler} className="me-2" />
+                  Distance Information
+                </h5>
+                {distanceLoading ? (
+                  <div className="text-center">
+                    <FontAwesomeIcon icon={faSpinner} spin />
+                    <span className="ms-2">Calculating distance...</span>
+                  </div>
+                ) : distanceInfo ? (
+                  <p className="mb-0">
+                    The distance between <strong>{departureAirport}</strong> and <strong>{destinationAirport}</strong> is{' '}
+                    <strong>
+                      {distanceInfo.distanceKm 
+                        ? `${distanceInfo.distanceKm.toFixed(2)} km (${(distanceInfo.distanceKm * 0.539957).toFixed(2)} NM)` 
+                        : 'not available'}
+                    </strong>
+                  </p>
+                ) : (
+                  <p className="text-muted mb-0">Unable to calculate distance. Please check the airport codes.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {loading ? (
