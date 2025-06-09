@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlane, faHome, faInfoCircle, faEnvelope, faMoon, faSun, faPlaneDeparture, faPlaneArrival } from '@fortawesome/free-solid-svg-icons';
+import { faPlane, faHome, faInfoCircle, faEnvelope, faMoon, faSun, faPlaneDeparture, faPlaneArrival, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { Navbar as BootstrapNavbar, Nav, Container, Button } from 'react-bootstrap';
 import '../styles/Navbar.css';
 
@@ -42,6 +42,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
             <Nav.Link as={Link} to="/airports">
               <FontAwesomeIcon icon={faPlaneArrival} className="me-1" />
               <span>Airports</span>
+            </Nav.Link>
+            <Nav.Link as={Link} to="/globe">
+              <FontAwesomeIcon icon={faGlobe} className="me-1" />
+              <span>Globe</span>
             </Nav.Link>
           </Nav>
           <Button 

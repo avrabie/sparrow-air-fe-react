@@ -12,6 +12,7 @@ import AircraftTypes from './pages/AircraftTypes'
 import AircraftTypeDetail from './pages/AircraftTypeDetail'
 import Airports from './pages/Airports'
 import AirportDetails from './pages/AirportDetails'
+import Globe from './pages/Globe'
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -54,6 +55,7 @@ function App() {
                 <Route path="/aircraft/:icaoCode" element={<AircraftTypeDetail />} />
                 <Route path="/airports" element={<Airports />} />
                 <Route path="/airports/:icaoCode" element={<AirportDetails />} />
+                <Route path="/globe" element={<Globe />} />
               </Routes>
             </div>
           </div>

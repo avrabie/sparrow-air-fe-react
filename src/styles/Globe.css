@@ -1,0 +1,110 @@
+/* Globe page styles */
+.globe-container {
+  padding: 20px;
+}
+
+.globe-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.globe-visualization {
+  width: 100%;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dark-mode .globe-visualization {
+  background-color: #2a2a2a;
+}
+
+.globe-stats {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  z-index: 10;
+}
+
+.dark-mode .globe-stats {
+  background-color: rgba(40, 40, 40, 0.8);
+  color: #fff;
+}
+
+.globe-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+.globe-placeholder code {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-size: 1.1em;
+}
+
+.dark-mode .globe-placeholder code {
+  background-color: #333;
+  color: #fff;
+}
+
+.globe-info {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.dark-mode .globe-info {
+  background-color: #333;
+}
+
+/* Styles for when react-globe.gl is implemented */
+.globe-tooltip {
+  position: absolute;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.dark-mode .globe-tooltip {
+  background-color: rgba(40, 40, 40, 0.9);
+  color: #fff;
+}
