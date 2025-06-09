@@ -1,6 +1,26 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 /**
+ * Custom fetch wrapper that adds required headers to all API requests
+ * @param {string} url - The URL to fetch
+ * @param {Object} options - Fetch options
+ * @returns {Promise<Response>} - The fetch response
+ */
+const apiFetch = async (url, options = {}) => {
+  // Ensure headers object exists
+  const headers = options.headers || {};
+
+  // Add the ngrok-skip-browser-warning header
+  headers['ngrok-skip-browser-warning'] = 'any value';
+
+  // Return fetch with updated options
+  return fetch(url, {
+    ...options,
+    headers,
+  });
+};
+
+/**
  * Fetches all aircraft from the API
  * @param {string} searchTerm - Optional search term to filter aircraft
  * @returns {Promise<Array>} - Promise resolving to an array of aircraft
@@ -14,7 +34,7 @@ export const getAllAircraftTypes = async (searchTerm = '') => {
       url += `?search=${encodeURIComponent(searchTerm)}`;
     }
 
-    const response = await fetch(url);
+    const response = await apiFetch(url);
 
     if (!response.ok) {
       throw new Error(`Error fetching aircraft: ${response.statusText}`);
@@ -34,7 +54,7 @@ export const getAllAircraftTypes = async (searchTerm = '') => {
  */
 export const getAircraftTypeByIcaoCode = async (icaoCode) => {
   try {
-    const response = await fetch(`${API_URL}/aircraft/${icaoCode}`);
+    const response = await apiFetch(`${API_URL}/aircraft/${icaoCode}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching aircraft: ${response.statusText}`);
@@ -54,7 +74,7 @@ export const getAircraftTypeByIcaoCode = async (icaoCode) => {
  */
 export const createAircraftType = async (aircraft) => {
   try {
-    const response = await fetch(`${API_URL}/aircraft`, {
+    const response = await apiFetch(`${API_URL}/aircraft`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

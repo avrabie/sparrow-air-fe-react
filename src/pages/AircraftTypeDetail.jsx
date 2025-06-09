@@ -345,6 +345,14 @@ function AircraftTypeDetail() {
                   <p>{aircraftType.cruiseAltitudeFt} ft</p>
                 </div>
               </div>
+
+              <div className="detail-item">
+                <div className="detail-text">
+                  <h3>Range</h3>
+                  <p>{aircraftType.rangeNm} NM</p>
+                  <p>{Math.round(aircraftType.rangeNm * 1.852)} KM</p>
+                </div>
+              </div>
             </div>
           </div>
 
