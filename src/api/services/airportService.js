@@ -140,7 +140,7 @@ export const getAirportByIcaoCode = async (icaoCode) => {
  */
 export const getAirportsDistance = async (fromIcaoCode, toIcaoCode) => {
   try {
-    const response = await apiFetch(`${API_URL}/airports/distance?from=${fromIcaoCode}&to=${toIcaoCode}`);
+    const response = await apiFetch(`${API_URL}/airportsnew/distance?from=${fromIcaoCode}&to=${toIcaoCode}`);
 
     if (!response.ok) {
       throw new Error(`Error calculating distance: ${response.statusText}`);

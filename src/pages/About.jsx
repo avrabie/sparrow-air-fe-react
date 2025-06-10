@@ -14,13 +14,13 @@ function About() {
       <FontAwesomeIcon icon={faInfoCircle} size="3x" style={{ color: '#0056b3', marginBottom: '1.5rem' }} />
       <h1>About Our Airline Management System</h1>
       <p>
-        Welcome to our Airline Management System. We provide comprehensive solutions for managing airline operations, 
-        including flight scheduling, passenger management, and crew assignments.
+        Hey fellow developers! I'm diving deep into reactive programming principles with this project, creating an immersive learning experience that leverages Spring Boot, PostgreSQL, and React. It's been a journey of "vibe coding" - that flow state where you build features step by step, though sometimes we need to roll up our sleeves for manual interventions and refactoring.
       </p>
+
       <p>
-        Our system is designed to streamline airline operations and enhance the passenger experience through 
-        efficient management of resources and timely information delivery.
+        I'm particularly focused on maintaining data consistency throughout the reactive stack, especially when it comes to critical operations like flight bookings. After all, nobody wants the real-world frustration of double-booked flights! We're still in early stages, but I'd love your collaboration as we work toward building a fully reactive application that delivers both performance and reliability.
       </p>
+
       <div className="features">
         <h2>Key Features</h2>
         <ul>
