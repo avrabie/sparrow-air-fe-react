@@ -43,6 +43,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
               <FontAwesomeIcon icon={faPlaneArrival} className="me-1" />
               <span>Airports</span>
             </Nav.Link>
+            <Nav.Link as={Link} to="/airlines">
+              <FontAwesomeIcon icon={faPlane} className="me-1" />
+              <span>Airlines</span>
+            </Nav.Link>
             <Nav.Link as={Link} to="/globe">
               <FontAwesomeIcon icon={faGlobe} className="me-1" />
               <span>Globe</span>
