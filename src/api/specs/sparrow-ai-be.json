@@ -516,6 +516,382 @@
         }
       }
     },
+    "/airlinesnew": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get all new airlines",
+        "description": "Returns a list of all new airlines ✈️🌍. Supports pagination with optional 'page' and 'size' query parameters.",
+        "operationId": "getAllAirlinesNew",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (zero-based)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Create a new airline",
+        "operationId": "createAirlineNew",
+        "requestBody": {
+          "description": "Airline to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirlineNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Airline created",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlinesnew/active/{active}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get airlines by active status",
+        "description": "Returns a list of airlines with the specified active status. Supports pagination with optional 'page' and 'size' query parameters.",
+        "operationId": "getAirlinesByActive",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "description": "Active status (Y/N)",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (zero-based)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlinesnew/country/{country}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get airlines by country",
+        "description": "Returns a list of airlines in the specified country. Supports pagination with optional 'page' and 'size' query parameters.",
+        "operationId": "getAirlinesByCountry",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "description": "Country name",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (zero-based)",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlinesnew/icao/{icaoCode}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get airline by ICAO code",
+        "description": "Returns an airline with the specified ICAO code",
+        "operationId": "getAirlineByIcaoCode",
+        "parameters": [
+          {
+            "name": "icaoCode",
+            "in": "path",
+            "description": "ICAO code",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlinesnew/{airlineId}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get new airline by ID",
+        "description": "Returns a new airline ✈️ by ID",
+        "operationId": "getAirlineNewById",
+        "parameters": [
+          {
+            "name": "airlineId",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Update an existing new airline",
+        "operationId": "updateAirlineNew",
+        "parameters": [
+          {
+            "name": "airlineId",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Airline to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirlineNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Airline updated",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Delete new airline by ID",
+        "operationId": "deleteAirlineNew",
+        "parameters": [
+          {
+            "name": "airlineId",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Airline deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Airline not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/airlines": {
       "get": {
         "tags": [
@@ -571,7 +947,7 @@
         ],
         "summary": "Get airline by ICAO code",
         "description": "Returns an airline by ICAO code",
-        "operationId": "getAirlineByIcaoCode",
+        "operationId": "getAirlineByIcaoCode_1",
         "parameters": [
           {
             "name": "icaoCode",
@@ -1014,261 +1390,6 @@
         }
       }
     },
-    "/airports": {
-      "get": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Get all airports",
-        "description": "Returns a list of all airports ✈️🌍",
-        "operationId": "getAllAirports",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Create a new airport",
-        "operationId": "createAirport",
-        "requestBody": {
-          "description": "Airport to create",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Airport"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Airport created",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          }
-        }
-      }
-    },
-    "/airports/distance": {
-      "get": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Calculate distance between two airports",
-        "description": "Returns the distance in kilometers between two airports identified by their ICAO codes",
-        "operationId": "calculateDistance",
-        "parameters": [
-          {
-            "name": "from",
-            "in": "query",
-            "description": "ICAO code of the departure airport",
-            "required": true,
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "name": "to",
-            "in": "query",
-            "description": "ICAO code of the arrival airport",
-            "required": true,
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          },
-          "400": {
-            "description": "Missing required parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "One or both airports not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/airports/{icaoCode}": {
-      "get": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Get airport by ICAO code",
-        "description": "Returns an airport 🛬 by ICAO code",
-        "operationId": "getAirportByIcaoCode",
-        "parameters": [
-          {
-            "name": "icaoCode",
-            "in": "path",
-            "required": true,
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          },
-          "404": {
-            "description": "Airport not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Update an existing airport",
-        "operationId": "updateAirport",
-        "parameters": [
-          {
-            "name": "icaoCode",
-            "in": "path",
-            "required": true,
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "requestBody": {
-          "description": "Airport to create",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Airport"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Airport updated",
-            "content": {
-              "application/json": {
-
-              }
-            }
-          },
-          "404": {
-            "description": "Airport not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Airports 🛬🌎"
-        ],
-        "summary": "Delete airport by ICAO code",
-        "operationId": "deleteAirport",
-        "parameters": [
-          {
-            "name": "icaoCode",
-            "in": "path",
-            "required": true,
-            "content": {
-              "*/*": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Airport deleted",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Airport not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/bookings": {
       "get": {
         "tags": [
@@ -1564,6 +1685,40 @@
                 "schema": {
                   "$ref": "#/components/schemas/ServerResponse"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gds/countries/name/{name}": {
+      "get": {
+        "tags": [
+          "General Data Sets 🌐"
+        ],
+        "summary": "Get countries by name similarity",
+        "description": "Returns a list of countries with names similar to the provided name",
+        "operationId": "getCountriesByNameSimilarity",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -2866,6 +3021,36 @@
           }
         }
       },
+      "AirlineNew": {
+        "type": "object",
+        "properties": {
+          "airlineId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "alias": {
+            "type": "string"
+          },
+          "iata": {
+            "type": "string"
+          },
+          "icaoCode": {
+            "type": "string"
+          },
+          "callsign": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "active": {
+            "type": "string"
+          }
+        }
+      },
       "Airline": {
         "type": "object",
         "properties": {
@@ -2935,34 +3120,6 @@
           },
           "kccode": {
             "type": "string"
-          }
-        }
-      },
-      "Airport": {
-        "type": "object",
-        "properties": {
-          "icaoCode": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "timezone": {
-            "type": "string"
-          },
-          "latitude": {
-            "type": "number",
-            "format": "double"
-          },
-          "longitude": {
-            "type": "number",
-            "format": "double"
           }
         }
       },
