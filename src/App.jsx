@@ -13,6 +13,7 @@ import AircraftTypeDetail from './pages/AircraftTypeDetail'
 import Airports from './pages/Airports'
 import AirportDetails from './pages/AirportDetails'
 import Airlines from './pages/Airlines'
+import AirlineDetails from './pages/AirlineDetails'
 import Globe from './pages/Globe'
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/airports" element={<Airports />} />
                 <Route path="/airports/:icaoCode" element={<AirportDetails />} />
                 <Route path="/airlines" element={<Airlines />} />
+                <Route path="/airlines/:icaoCode" element={<AirlineDetails />} />
                 <Route path="/globe" element={<Globe />} />
               </Routes>
             </div>

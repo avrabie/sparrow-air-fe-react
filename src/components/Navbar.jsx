@@ -16,7 +16,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
       <Container>
         <BootstrapNavbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <FontAwesomeIcon icon={faPlane} className="me-2" />
-          <span>Airline Management System</span>
+          <span>vAMS</span>
         </BootstrapNavbar.Brand>
 
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
