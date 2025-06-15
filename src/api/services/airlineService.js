@@ -155,3 +155,27 @@ export const getAirlinesByActiveStatus = async (active, page = 0, size = 20) => 
     throw error;
   }
 };
+
+/**
+ * Fetches airlines by name containing a specific string
+ * @param {string} nameContains - String to search for in airline names
+ * @param {number} page - Page number (zero-based)
+ * @param {number} size - Number of items per page
+ * @returns {Promise<Object>} - Promise resolving to paginated airlines data
+ */
+export const getAirlinesByNameContaining = async (nameContains, page = 0, size = 20) => {
+  try {
+    const url = `${API_URL}/airlinesnew/name/${encodeURIComponent(nameContains)}?page=${page}&size=${size}`;
+
+    const response = await apiFetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Error fetching airlines by name: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch airlines with name containing ${nameContains}:`, error);
+    throw error;
+  }
+};

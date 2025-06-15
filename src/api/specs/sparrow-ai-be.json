@@ -708,6 +708,51 @@
         }
       }
     },
+    "/airlinesnew/iata/{iataCode}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get airline by IATA code",
+        "description": "Returns an airline with the specified IATA code",
+        "operationId": "getAirlineByIataCode",
+        "parameters": [
+          {
+            "name": "iataCode",
+            "in": "path",
+            "description": "IATA code",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/airlinesnew/icao/{icaoCode}": {
       "get": {
         "tags": [
@@ -747,6 +792,41 @@
                 "schema": {
                   "$ref": "#/components/schemas/ServerResponse"
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airlinesnew/name/{nameContains}": {
+      "get": {
+        "tags": [
+          "Airlines New ✈️🌍"
+        ],
+        "summary": "Get airlines by name containing a string",
+        "description": "Returns a list of airlines where the name contains the specified string",
+        "operationId": "getAirlinesByNameContaining",
+        "parameters": [
+          {
+            "name": "nameContains",
+            "in": "path",
+            "description": "String to search for in airline names",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
               }
             }
           }
@@ -1633,6 +1713,36 @@
         }
       }
     },
+    "/caa/moldova/aircraft-registrations": {
+      "get": {
+        "tags": [
+          "caa-route-handlers"
+        ],
+        "summary": "Get Moldavian Aircraft Registrations",
+        "description": "Retrieves aircraft registration data from the Moldavian CAA PDF",
+        "operationId": "getMoldavianAircraftRegistrations",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MdaAircraftRegistration"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "text/plain": {
+
+              }
+            }
+          }
+        }
+      }
+    },
     "/gds/countries": {
       "get": {
         "tags": [
@@ -1853,6 +1963,412 @@
           },
           "404": {
             "description": "Country not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get all FAA aircraft registrations",
+        "description": "Returns a list of all FAA aircraft registrations 📝",
+        "operationId": "getAllFaaAircraftRegistrations",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Create a new FAA aircraft registration",
+        "operationId": "createFaaAircraftRegistration",
+        "requestBody": {
+          "description": "FAA aircraft registration to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FaaAircraftRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "FAA aircraft registration created",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/aircraft-mfr-model-code/{aircraftMfrModelCode}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registrations by aircraft manufacturer model code",
+        "description": "Returns a list of FAA aircraft registrations 📝 by aircraft manufacturer model code",
+        "operationId": "getFaaAircraftRegistrationsByAircraftMfrModelCode",
+        "parameters": [
+          {
+            "name": "aircraftMfrModelCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/engine-mfr-model-code/{engineMfrModelCode}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registrations by engine manufacturer model code",
+        "description": "Returns a list of FAA aircraft registrations 📝 by engine manufacturer model code",
+        "operationId": "getFaaAircraftRegistrationsByEngineMfrModelCode",
+        "parameters": [
+          {
+            "name": "engineMfrModelCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/mode-s-code/{modeSCode}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registrations by Mode S Code",
+        "description": "Returns a list of FAA aircraft registrations 📝 by Mode S Code",
+        "operationId": "getFaaAircraftRegistrationsByModeSCode",
+        "parameters": [
+          {
+            "name": "modeSCode",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/mode-scode-hex/{modeScodeHex}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registrations by Mode S Code Hex",
+        "description": "Returns a list of FAA aircraft registrations 📝 by Mode S Code Hex",
+        "operationId": "getFaaAircraftRegistrationsByModeScodeHex",
+        "parameters": [
+          {
+            "name": "modeScodeHex",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/type-aircraft/{typeAircraft}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registrations by type aircraft",
+        "description": "Returns a list of FAA aircraft registrations 📝 by type aircraft",
+        "operationId": "getFaaAircraftRegistrationsByTypeAircraft",
+        "parameters": [
+          {
+            "name": "typeAircraft",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/upload": {
+      "post": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Upload FAA aircraft registrations from a file",
+        "description": "Uploads and processes a file containing FAA aircraft registrations",
+        "operationId": "uploadFaaAircraftRegistrationsFile",
+        "requestBody": {
+          "description": "File containing FAA aircraft registrations",
+          "content": {
+            "multipart/form-data": {
+
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "File processed successfully",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, file not provided or invalid",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/faa-aircraft-registrations/{nNumber}": {
+      "get": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Get FAA aircraft registration by N-Number",
+        "description": "Returns a FAA aircraft registration 📝 by N-Number",
+        "operationId": "getFaaAircraftRegistrationByNNumber",
+        "parameters": [
+          {
+            "name": "nNumber",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "FAA aircraft registration not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Update an existing FAA aircraft registration",
+        "operationId": "updateFaaAircraftRegistration",
+        "parameters": [
+          {
+            "name": "nNumber",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "FAA aircraft registration to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FaaAircraftRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "FAA aircraft registration updated",
+            "content": {
+              "application/json": {
+
+              }
+            }
+          },
+          "404": {
+            "description": "FAA aircraft registration not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FAA Aircraft Registration 📝"
+        ],
+        "summary": "Delete FAA aircraft registration by N-Number",
+        "operationId": "deleteFaaAircraftRegistration",
+        "parameters": [
+          {
+            "name": "nNumber",
+            "in": "path",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "FAA aircraft registration deleted",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FAA aircraft registration not found",
             "content": {
               "*/*": {
                 "schema": {
@@ -3173,6 +3689,38 @@
           }
         }
       },
+      "MdaAircraftRegistration": {
+        "type": "object",
+        "properties": {
+          "registrationNumber": {
+            "type": "string"
+          },
+          "aircraftType": {
+            "type": "string"
+          },
+          "operatorIcaoCode": {
+            "type": "string"
+          },
+          "msn": {
+            "type": "string"
+          },
+          "ownerName": {
+            "type": "string"
+          },
+          "ownerAddress": {
+            "type": "string"
+          },
+          "countryOfRegistration": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "dateOfRegistration": {
+            "type": "string"
+          }
+        }
+      },
       "Country": {
         "type": "object",
         "properties": {
@@ -3192,6 +3740,116 @@
             "type": "string"
           },
           "language": {
+            "type": "string"
+          }
+        }
+      },
+      "FaaAircraftRegistration": {
+        "type": "object",
+        "properties": {
+          "serialNumber": {
+            "type": "string"
+          },
+          "aircraftMfrModelCode": {
+            "type": "string"
+          },
+          "engineMfrModelCode": {
+            "type": "string"
+          },
+          "yearManufactured": {
+            "type": "string"
+          },
+          "typeRegistrant": {
+            "type": "string"
+          },
+          "registrantName": {
+            "type": "string"
+          },
+          "street1": {
+            "type": "string"
+          },
+          "street2": {
+            "type": "string"
+          },
+          "registrantCity": {
+            "type": "string"
+          },
+          "registrantState": {
+            "type": "string"
+          },
+          "registrantZipCode": {
+            "type": "string"
+          },
+          "registrantRegion": {
+            "type": "string"
+          },
+          "countyMail": {
+            "type": "string"
+          },
+          "countryMail": {
+            "type": "string"
+          },
+          "lastActivityDate": {
+            "type": "string"
+          },
+          "certificateIssueDate": {
+            "type": "string"
+          },
+          "airworthinessClassificationCode": {
+            "type": "string"
+          },
+          "approvedOperationCodes": {
+            "type": "string"
+          },
+          "typeAircraft": {
+            "type": "string"
+          },
+          "typeEngine": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "string"
+          },
+          "modeSCode": {
+            "type": "string"
+          },
+          "fractionalOwnership": {
+            "type": "string"
+          },
+          "airworthinessDate": {
+            "type": "string"
+          },
+          "otherName1": {
+            "type": "string"
+          },
+          "otherName2": {
+            "type": "string"
+          },
+          "otherName3": {
+            "type": "string"
+          },
+          "otherName4": {
+            "type": "string"
+          },
+          "otherName5": {
+            "type": "string"
+          },
+          "expirationDate": {
+            "type": "string"
+          },
+          "uniqueId": {
+            "type": "string"
+          },
+          "kitMfr": {
+            "type": "string"
+          },
+          "kitModel": {
+            "type": "string"
+          },
+          "modeScodeHex": {
+            "type": "string"
+          },
+          "nnumber": {
             "type": "string"
           }
         }

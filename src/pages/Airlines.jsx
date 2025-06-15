@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlane, faSearch, faSpinner, faSliders, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { getAirlines, getCountries, getAirlinesByCountry, getAirlinesByActiveStatus } from '../api/services/airlineService';
+import { getAirlines, getCountries, getAirlinesByCountry, getAirlinesByActiveStatus, getAirlinesByNameContaining } from '../api/services/airlineService';
 import '../styles/Airports.css'; // Reusing the Airports CSS for now
 
 function Airlines() {
@@ -73,7 +73,14 @@ function Airlines() {
     // Set a new timeout to search after 500ms
     setSearching(true);
     searchTimeoutRef.current = setTimeout(() => {
-      fetchAirlines(0, 100, searchTerm);
+      // If we have a country filter or active filter, we need to fetch with those filters
+      // and then apply the search term client-side
+      if (selectedCountry || activeFilter) {
+        fetchAirlines(0, 100, '');
+      } else {
+        // If no filters are applied, we can use the backend search
+        fetchAirlines(0, 100, searchTerm);
+      }
     }, 500);
 
     // Cleanup function to clear the timeout if the component unmounts or search/filter changes again
@@ -101,9 +108,12 @@ function Airlines() {
       } else if (activeFilter) {
         // If active filter is selected, use the active-specific endpoint
         data = await getAirlinesByActiveStatus(activeFilter, page, size);
+      } else if (search) {
+        // If search term is provided, use the name-based search endpoint
+        data = await getAirlinesByNameContaining(search, page, size);
       } else {
-        // Otherwise use the main endpoint with search if provided
-        data = await getAirlines(page, size, search);
+        // Otherwise use the main endpoint
+        data = await getAirlines(page, size);
       }
 
       // Assuming the API returns a paginated response with content, totalElements, etc.
@@ -143,22 +153,38 @@ function Airlines() {
     }, 500); // 500ms delay to show loading indicator
   };
 
-  // Use the airlines directly since filtering is now done on the backend
+  // Apply client-side filtering when search term is used with other filters
   const filteredAirlines = useMemo(() => {
-    return airlines;
-  }, [airlines]);
+    // If no search term or search is being handled by the backend, return airlines as is
+    if (!searchTerm || (!selectedCountry && !activeFilter)) {
+      return airlines;
+    }
+
+    // Apply client-side filtering for the search term
+    return airlines.filter(airline => {
+      const searchLower = searchTerm.toLowerCase();
+      return (
+        (airline.name && airline.name.toLowerCase().includes(searchLower)) ||
+        (airline.icaoCode && airline.icaoCode.toLowerCase().includes(searchLower)) ||
+        (airline.iata && airline.iata.toLowerCase().includes(searchLower)) ||
+        (airline.callsign && airline.callsign.toLowerCase().includes(searchLower)) ||
+        (airline.country && airline.country.toLowerCase().includes(searchLower))
+      );
+    });
+  }, [airlines, searchTerm, selectedCountry, activeFilter]);
 
   // Handle search input change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setVisibleCount(20); // Reset visible count when search changes
   };
 
   // Handle country selection change
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
-    // Reset search term and active filter when changing country
-    setSearchTerm('');
+    // Reset active filter when changing country, but keep search term
     setActiveFilter('');
+    setVisibleCount(20); // Reset visible count when filter changes
     // Fetch airlines for the selected country
     fetchAirlines(0, 100, '');
   };
@@ -166,9 +192,9 @@ function Airlines() {
   // Handle active filter change
   const handleActiveFilterChange = (e) => {
     setActiveFilter(e.target.value);
-    // Reset search term and country filter when changing active filter
-    setSearchTerm('');
+    // Reset country filter when changing active filter, but keep search term
     setSelectedCountry('');
+    setVisibleCount(20); // Reset visible count when filter changes
     // Fetch airlines for the selected active status
     fetchAirlines(0, 100, '');
   };
@@ -298,6 +324,7 @@ function Airlines() {
                     onClick={() => {
                       setSelectedCountry('');
                       setActiveFilter('');
+                      setVisibleCount(20); // Reset visible count when filters are cleared
                       fetchAirlines(0, 100, searchTerm);
                     }}
                     style={{ 

@@ -16,7 +16,7 @@ function Home() {
     return (
         <div className="home-container">
             <div className="hero-section">
-                <h1>Welcome to a Vitrual Airline Management System</h1>
+                <h1>Welcome Anthony</h1>
                 <Link to="/globe">
                     <button className="cta-button">
                         Get Started
